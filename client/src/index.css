@@ -1,0 +1,17 @@
+:root {
+  font-family: "Rubik", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: normal;
+  font-style: normal;
+
+  --color-primary: #0092ca;
+  --color-background: #eef5f8;
+
+  background-color: var(--color-background);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}

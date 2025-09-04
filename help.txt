@@ -1,0 +1,97 @@
+🔹 Cliente (vista pública / tienda online)
+
+Barra superior (general):
+
+Logo (Inicio)
+
+Inicio
+
+Sobre Nosotros
+
+Contacto
+
+Ayuda
+
+Mi cuenta (Login / Registro / Perfil)
+
+Carrito 🛒 (con contador)
+
+Buscador 🔍 (en el centro de la barra)
+
+Barra de categorías (productos):
+
+Ofertas
+
+Frutas y Verduras
+
+Carnes y Pescados
+
+Panadería
+
+Bebidas
+
+Limpieza y Hogar
+
+Cuidado personal
+
+👉 Todo pensado para compra rápida y navegación de productos.
+
+🔹 Manager (gestión de productos y pedidos)
+
+Sidebar o menú de gestión:
+
+Dashboard
+
+Productos
+
+Crear producto
+
+Listar productos
+
+Editar producto
+
+Órdenes
+
+Pendientes
+
+En camino
+
+Entregadas
+
+Reportes básicos (ventas, stock)
+
+👉 Aquí el carrito no aplica, porque el manager no compra, solo gestiona stock y pedidos.
+
+🔹 Admin (control total del sistema)
+
+Sidebar o menú de gestión:
+
+Dashboard (estadísticas generales)
+
+Productos (igual que manager)
+
+Órdenes (igual que manager)
+
+Usuarios
+
+Listar usuarios
+
+Cambiar roles (cliente, manager, admin)
+
+Bloquear usuarios
+
+Roles y permisos
+
+Reportes avanzados
+
+Configuración del sistema
+
+Logs / Auditoría
+
+👉 El admin tiene superpoderes, controla usuarios y configuraciones.
+
+🔹 Comparación rápida (resumen tipo tabla)
+Rol	Enlaces principales
+Cliente	Inicio, Categorías, Carrito, Mi cuenta, Buscador
+Manager	Dashboard, Crear/Gestionar productos, Órdenes (pendientes, en camino, entregadas), Reportes
+Admin	Todo lo del Manager + Usuarios, Roles, Configuración, Logs
