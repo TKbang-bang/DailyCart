@@ -6,12 +6,14 @@ import {
 } from "./token.service";
 
 const api = axios.create({
-  baseURL: `${import.meta.env.VITE_SERVER_URL}/private`,
+  baseURL: `${import.meta.env.VITE_SERVER_URL}/protected`,
   withCredentials: true,
 });
 
 api.interceptors.request.use((config) => {
   const token = getAccessToken();
+
+  console.log({ token });
 
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;

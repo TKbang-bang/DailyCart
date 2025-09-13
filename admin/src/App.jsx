@@ -1,36 +1,50 @@
-import React, { useEffect, useState } from "react";
+import React, { createContext, useEffect, useState } from "react";
 import { Routes, Route, useNavigate } from "react-router-dom";
 import Signup from "./Auth/Signup";
 import Home from "./Home/Home";
 import { Toaster } from "sonner";
 import axios from "axios";
+import Login from "./Auth/Login";
 
 axios.defaults.baseURL = `${import.meta.env.VITE_SERVER_URL}`;
 axios.defaults.withCredentials = true;
 
+export const UserContext = createContext();
+
 function App() {
-  const [yes, setYes] = useState(false);
+  const [user, setUser] = useState({});
   const navigate = useNavigate();
 
   useEffect(() => {
     const getUserLog = async () => {
-      if (yes) return;
+      try {
+        const res = await axios.get("/protected/common/users/me");
 
-      navigate("/signup");
+        if (res.status != 200) throw new Error(res.data.message);
+
+        setUser(res.data.user);
+      } catch (error) {
+        if (
+          window.location.pathname !== "/login" ||
+          window.location.pathname !== "/signup"
+        )
+          navigate("/login");
+      }
     };
 
     getUserLog();
   }, []);
 
   return (
-    <>
+    <UserContext.Provider value={user}>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/signup" element={<Signup />} />
+        <Route path="/login" element={<Login />} />
       </Routes>
 
       <Toaster position="top-center" richColors duration={2500} />
-    </>
+    </UserContext.Provider>
   );
 }
 

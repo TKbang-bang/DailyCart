@@ -6,6 +6,8 @@ const sessionMiddleware = async (req, res, next) => {
   const accessToken = req.headers.authorization?.split(" ")[1];
   const refreshToken = req.cookies.refreshToken;
 
+  console.log({ accessToken, refreshToken });
+
   // token verification
   if (!accessToken && !refreshToken)
     return res.status(401).json({ message: "Unauthorized" });
@@ -28,7 +30,7 @@ const sessionMiddleware = async (req, res, next) => {
   if (refreshToken) {
     try {
       // verify refresh token
-      const { id } = jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET);
+      const { id } = jwt.verify(refreshToken, process.env.JWT_REFRESH_SECRET);
 
       // create new access and refresh tokens
       const newAccessToken = createAccessToken(id);

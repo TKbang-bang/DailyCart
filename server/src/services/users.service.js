@@ -4,7 +4,7 @@ const getUserByEmail = async (email) => {
   try {
     const user = await User.findOne({ where: { email } });
 
-    return user;
+    return user ? user : null;
   } catch (error) {
     throw new Error(error);
   }
@@ -14,7 +14,7 @@ const getUserById = async (id) => {
   try {
     const user = await User.findByPk(id);
 
-    return user;
+    return user ? user : null;
   } catch (error) {
     throw new Error(error);
   }

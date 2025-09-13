@@ -3,6 +3,7 @@ const { createManagerOrAdmin } = require("../services/auth.service");
 const { sendingCookieToken } = require("../services/cookies.service");
 const { getUserByEmail, getUserById } = require("../services/users.service");
 const { createAccessToken, createRefreshToken } = require("../utils/token");
+const bcrypt = require("bcrypt");
 
 const privateSignup = async (req, res, next) => {
   try {
@@ -34,13 +35,45 @@ const privateSignup = async (req, res, next) => {
   }
 };
 
-const isUserLogged = async (req, res, next) => {
+const login = async (req, res, next) => {
   try {
-    // geting the user by id
-    const user = await getUserById(req.userId);
-    if (!user) return next(new ServerError("User not found", "user", 404));
+    // credentials from client
+    const { email, password } = req.body;
 
-    return res.status(200).json({ message: "You are logged" });
+    // check if the email is already in use
+    const user = await getUserByEmail(email);
+    if (!user) return next(new ServerError("User not found", "email", 404));
+
+    // check if the password is correct
+    const isPasswordCorrect = await bcrypt.compare(password, user.password);
+    if (!isPasswordCorrect)
+      return next(new ServerError("Incorrect password", "password", 400));
+
+    // creting the tokens
+    const accessToken = createAccessToken(user.id);
+    const refreshToken = createRefreshToken(user.id);
+
+    // sending the cookie and token
+    return sendingCookieToken(res, accessToken, refreshToken);
+  } catch (error) {
+    return next(new ServerError("Internal server error", "server", 500));
+  }
+};
+
+const logout = async (req, res, next) => {
+  try {
+    // deleting the user id
+    req.userId = null;
+
+    // clearing the cookie
+    res.clearCookie("refreshToken", {
+      httpOnly: true,
+      secure: false,
+      sameSite: "lax",
+      path: "/",
+    });
+
+    res.status(204).end();
   } catch (error) {
     return next(new ServerError("Internal server error", "server", 500));
   }
@@ -48,5 +81,6 @@ const isUserLogged = async (req, res, next) => {
 
 module.exports = {
   privateSignup,
-  isUserLogged,
+  login,
+  logout,
 };

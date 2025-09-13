@@ -43,8 +43,18 @@ export const signup = async (
   }
 };
 
-export const isUserLogged = async () => {
+export const login = async (email, password) => {
   try {
+    if (!email || !password)
+      return { ok: false, message: "Please fill all the fields." };
+
+    const res = await axios.post("/auth/common/login", { email, password });
+
+    if (res.status !== 200) return { ok: false, message: res.data.message };
+
+    setAccessToken(res.data.accessToken);
+
+    return { ok: true, message: "Login successful" };
   } catch (error) {
     return {
       ok: false,

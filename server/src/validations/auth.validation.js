@@ -44,12 +44,13 @@ const nameValidation = (firstName, lastName) => {
 
   return { ok: true };
 };
+
 const signupValidation = (req, res, next) => {
   const { firstName, lastName, email, password } = req.body;
 
   if (!firstName || !lastName || !email || !password) {
-    return res.status(400).json({
-      about: "signup",
+    return res.status(422).json({
+      about: "sign up",
       message: "Please provide all required fields, except code",
     });
   }
@@ -57,18 +58,43 @@ const signupValidation = (req, res, next) => {
   // name validation
   const nameValidationResult = nameValidation(firstName, lastName);
   if (!nameValidationResult.ok)
-    return next(new ServerError(nameValidationResult.message, "signup", 400));
+    return next(new ServerError(nameValidationResult.message, "sign up", 422));
 
   // email validation
   const emailValidationResult = emailValidation(email);
   if (!emailValidationResult.ok)
-    return next(new ServerError(emailValidationResult.message, "signup", 400));
+    return next(new ServerError(emailValidationResult.message, "sign up", 422));
 
   // password validation
   const passwordValidationResult = passwordValidation(password);
   if (!passwordValidationResult.ok)
     return next(
-      new ServerError(passwordValidationResult.message, "signup", 400)
+      new ServerError(passwordValidationResult.message, "sign up", 422)
+    );
+
+  return next();
+};
+
+const loginValidation = (req, res, next) => {
+  const { email, password } = req.body;
+
+  if (!email || !password) {
+    return res.status(422).json({
+      about: "log in",
+      message: "Please provide all required fields",
+    });
+  }
+
+  // email validation
+  const emailValidationResult = emailValidation(email);
+  if (!emailValidationResult.ok)
+    return next(new ServerError(emailValidationResult.message, "log in", 422));
+
+  // password validation
+  const passwordValidationResult = passwordValidation(password);
+  if (!passwordValidationResult.ok)
+    return next(
+      new ServerError(passwordValidationResult.message, "log in", 422)
     );
 
   return next();
@@ -76,4 +102,5 @@ const signupValidation = (req, res, next) => {
 
 module.exports = {
   signupValidation,
+  loginValidation,
 };
