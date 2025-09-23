@@ -1,0 +1,17 @@
+.home {
+  width: 100vw;
+  height: 90svh;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(1, 1fr);
+
+  & nav {
+    grid-column: 1/2;
+    background-color: var(--color-dark-2);
+  }
+
+  & section {
+    grid-column: 2/5;
+    overflow-y: scroll;
+  }
+}

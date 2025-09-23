@@ -54,6 +54,12 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         defaultValue: "user",
       },
+      name: {
+        type: DataTypes.VIRTUAL,
+        get() {
+          return `${this.firstname} ${this.lastname}`.trim();
+        },
+      },
     },
     {
       sequelize,

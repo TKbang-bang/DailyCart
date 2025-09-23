@@ -1,0 +1,82 @@
+header {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  height: 10svh;
+  background-color: var(--color-dark);
+
+  & .logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    color: var(--color-light);
+
+    & h1 {
+      color: var(--color-light);
+    }
+  }
+
+  & .name {
+    font-size: 1.5rem;
+    opacity: 0.8;
+    color: var(--color-light);
+  }
+
+  & .logout {
+    background-color: var(--color-light);
+    color: var(--color-dark);
+    font-size: 1rem;
+    border: none;
+    border-radius: 0.2rem;
+    padding: 0.5rem;
+    cursor: pointer;
+  }
+}
+
+nav {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  color: var(--color-light);
+
+  & ul {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    flex-direction: column;
+    padding-inline: 0.3rem;
+
+    & li {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      list-style: none;
+
+      & a {
+        display: block;
+        color: var(--color-light);
+        text-decoration: none;
+        width: 100%;
+        padding: 1rem 0.5rem;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        transition: all 0.2s ease-in-out;
+
+        &:hover {
+          background-color: var(--color-light);
+          color: var(--color-dark);
+        }
+
+        &.active {
+          background-color: var(--color-light);
+          color: var(--color-dark);
+        }
+      }
+    }
+  }
+}
